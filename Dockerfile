@@ -1,5 +1,5 @@
 FROM rocker/r-base
-MAINTAINER "The pbdR Core Team" RBigData@gmail.com
+MAINTAINER "Yuping Lu" yupinglu89@gmail.com
 
 RUN apt-get update      \
   && apt-get install -y \
@@ -14,7 +14,7 @@ RUN apt-get update      \
 RUN apt-get install -y \
   r-cran-curl
 
-RUN r -e "install.packages(c('rlecuyer', 'remotes'), \
+RUN r -e "install.packages(c('rlecuyer', 'remotes', 'randomForest'), \
   repos='https://cran.rstudio.com/', dependencies='Imports')"
 
 ENV COLOROUT_VERSION 1.1-2
@@ -57,12 +57,12 @@ RUN apt-get autoclean
 
 
 # create an R user
-ENV HOME /home/pbdR
-RUN useradd --create-home --home-dir $HOME pbdR \
-  && chown -R pbdR:pbdR $HOME
+ENV HOME /home/ylk
+RUN useradd --create-home --home-dir $HOME ylk \
+  && chown -R ylk:users $HOME
 
 WORKDIR $HOME
-USER pbdR
+USER ylk
 
 
 
