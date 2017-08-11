@@ -8,7 +8,14 @@ RUN apt-get update      \
     ssh                 \
     libopenblas-dev     \
     libopenmpi-dev      \
-    libibverbs-dev
+    libibverbs1         \
+    libibcm1            \
+    libibcm-dev         \
+    ibverbs-utils       \
+    libibverbs-dev      \
+    librdmacm-dev       \
+    librdmacm1          \
+    rdmacm-utils
 
 # some CRAN dependencies
 RUN apt-get install -y \
