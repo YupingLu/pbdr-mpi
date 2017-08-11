@@ -7,8 +7,9 @@ RUN apt-get update      \
     python              \
     ssh                 \
     libopenblas-dev     \
-    libopenmpi-dev
-
+    libopenmpi-dev      \
+    libibverbs          \
+    libibverbs-devel
 
 # some CRAN dependencies
 RUN apt-get install -y \
@@ -25,14 +26,10 @@ RUN cd /tmp \
   && rm colorout_1.1-2.tar.gz \
   && rm -rf colorout/
 
-
-
 # install latest pbdR packages from github
 RUN r -e "                                      \
   remotes::install_github('RBigData/pbdMPI')  ; \
 "
-
-
 
 # some quality of life stuff
 RUN echo "alias R='R --no-save --quiet'" >> /etc/bash.bashrc
@@ -41,20 +38,14 @@ RUN echo "options(repos=structure(c(CRAN='https://cran.rstudio.com/'))) ; \
   library(colorout);                                                      \
   " > /usr/lib/R/etc/Rprofile.site
 
-
-
 # use openblas
 RUN update-alternatives --set libblas.so.3 /usr/lib/openblas-base/libblas.so.3
-
-
 
 # cleanup
 RUN rm -rf /tmp/*
 RUN apt-get remove -y --purge python wget
 RUN apt-get autoremove -y
 RUN apt-get autoclean
-
-
 
 # create an R user
 ENV HOME /home/ylk
@@ -63,8 +54,6 @@ RUN useradd --create-home --home-dir $HOME ylk \
 
 WORKDIR $HOME
 USER ylk
-
-
 
 # default command
 CMD ["bash"]
