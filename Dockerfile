@@ -10,6 +10,10 @@ RUN apt-get update      \
     libopenmpi-dev      
     
 # Using Host libraries
+RUN apt install -y software-properties-common
+RUN apt-add-repository -y universe
+RUN apt update
+RUN mkdir /usr/local/openmpi || echo "Directory exists"
 RUN mkdir /all_hostlibs || echo "Directory exists"
 RUN mkdir /desired_hostlibs || echo "Directory exists"
 RUN mkdir /etc/libibverbs.d || echo "Directory exists"
@@ -21,7 +25,7 @@ RUN echo "driver i40iw" > /etc/libibverbs.d/i40iw.driver
 RUN echo "driver ipath" > /etc/libibverbs.d/ipath.driver
 RUN echo "driver mthca" > /etc/libibverbs.d/mthca.driver
 RUN echo "driver nes" > /etc/libibverbs.d/nes.driver
-RUN wget https://gist.githubusercontent.com/l1ll1/89b3f067d5b790ace6e6767be5ea2851/raw/422c8b5446c6479285cd29d1bf5be60f1b359b90/desired_hostlibs.txt -O /tmp/desired_hostlibs.txt
+RUN wget https://gist.githubusercontent.com/YupingLu/08e66ce5923d0fc9a3bf97aad136289f/raw/998ae5baf3e6561f1fad001fc1f8c41dcb62ba51/desired_hostlibs.txt -O /tmp/desired_hostlibs.txt
 RUN cat /tmp/desired_hostlibs.txt | xargs -I{} ln -s /all_hostlibs/{} /desired_hostlibs/{}
 RUN rm /tmp/desired_hostlibs.txt
 
