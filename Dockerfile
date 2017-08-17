@@ -11,7 +11,7 @@ RUN apt-get update      \
     
 # Using Host libraries
 RUN apt install -y software-properties-common
-RUN apt-add-repository -y universe
+#RUN apt-add-repository -y universe
 RUN apt update
 RUN mkdir /usr/local/openmpi || echo "Directory exists"
 RUN mkdir /all_hostlibs || echo "Directory exists"
