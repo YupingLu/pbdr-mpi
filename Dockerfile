@@ -7,21 +7,23 @@ RUN apt-get update      \
     python              \
     ssh                 \
     libopenblas-dev     \
-    libopenmpi-dev      \
-    mkdir /all_hostlibs || echo "Directory exists"  \
-    mkdir /desired_hostlibs || echo "Directory exists"  \
-    mkdir /etc/libibverbs.d || echo "Directory exists"  \
-    echo "driver mlx4" > /etc/libibverbs.d/mlx4.driver  \
-    echo "driver mlx5" > /etc/libibverbs.d/mlx5.driver  \
-    echo "driver cxgb3" > /etc/libibverbs.d/cxgb3.driver  \
-    echo "driver cxgb4" > /etc/libibverbs.d/cxgb4.driver  \
-    echo "driver i40iw" > /etc/libibverbs.d/i40iw.driver  \
-    echo "driver ipath" > /etc/libibverbs.d/ipath.driver  \
-    echo "driver mthca" > /etc/libibverbs.d/mthca.driver  \
-    echo "driver nes" > /etc/libibverbs.d/nes.driver  \
-    wget https://gist.githubusercontent.com/l1ll1/89b3f067d5b790ace6e6767be5ea2851/raw/422c8b5446c6479285cd29d1bf5be60f1b359b90/desired_hostlibs.txt -O /tmp/desired_hostlibs.txt   \
-    cat /tmp/desired_hostlibs.txt | xargs -I{} ln -s /all_hostlibs/{} /desired_hostlibs/{}  \
-    rm /tmp/desired_hostlibs.txt
+    libopenmpi-dev      
+    
+# Using Host libraries
+RUN mkdir /all_hostlibs || echo "Directory exists"
+RUN mkdir /desired_hostlibs || echo "Directory exists"
+RUN mkdir /etc/libibverbs.d || echo "Directory exists"
+RUN echo "driver mlx4" > /etc/libibverbs.d/mlx4.driver
+RUN echo "driver mlx5" > /etc/libibverbs.d/mlx5.driver
+RUN echo "driver cxgb3" > /etc/libibverbs.d/cxgb3.driver
+RUN echo "driver cxgb4" > /etc/libibverbs.d/cxgb4.driver
+RUN echo "driver i40iw" > /etc/libibverbs.d/i40iw.driver
+RUN echo "driver ipath" > /etc/libibverbs.d/ipath.driver
+RUN echo "driver mthca" > /etc/libibverbs.d/mthca.driver
+RUN echo "driver nes" > /etc/libibverbs.d/nes.driver
+RUN wget https://gist.githubusercontent.com/l1ll1/89b3f067d5b790ace6e6767be5ea2851/raw/422c8b5446c6479285cd29d1bf5be60f1b359b90/desired_hostlibs.txt -O /tmp/desired_hostlibs.txt
+RUN cat /tmp/desired_hostlibs.txt | xargs -I{} ln -s /all_hostlibs/{} /desired_hostlibs/{}
+RUN rm /tmp/desired_hostlibs.txt
 
 # some CRAN dependencies
 RUN apt-get install -y \
