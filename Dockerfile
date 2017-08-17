@@ -6,8 +6,8 @@ RUN apt-get update      \
     wget                \
     python              \
     ssh                 \
-    libopenblas-dev     \
-    libopenmpi-dev      
+    libopenblas-dev     
+    #libopenmpi-dev      
     
 # Using Host libraries
 RUN apt install -y software-properties-common
@@ -15,7 +15,7 @@ RUN apt install -y software-properties-common
 RUN apt update
 RUN mkdir /usr/local/openmpi || echo "Directory exists"
 RUN mkdir /all_hostlibs || echo "Directory exists"
-RUN mkdir /desired_hostlibs || echo "Directory exists"
+RUN mkdir /usr/lib64 || echo "Directory exists"
 RUN mkdir /etc/libibverbs.d || echo "Directory exists"
 RUN echo "driver mlx4" > /etc/libibverbs.d/mlx4.driver
 RUN echo "driver mlx5" > /etc/libibverbs.d/mlx5.driver
@@ -26,7 +26,7 @@ RUN echo "driver ipath" > /etc/libibverbs.d/ipath.driver
 RUN echo "driver mthca" > /etc/libibverbs.d/mthca.driver
 RUN echo "driver nes" > /etc/libibverbs.d/nes.driver
 RUN wget https://gist.githubusercontent.com/YupingLu/08e66ce5923d0fc9a3bf97aad136289f/raw/998ae5baf3e6561f1fad001fc1f8c41dcb62ba51/desired_hostlibs.txt -O /tmp/desired_hostlibs.txt
-RUN cat /tmp/desired_hostlibs.txt | xargs -I{} ln -s /all_hostlibs/{} /desired_hostlibs/{}
+RUN cat /tmp/desired_hostlibs.txt | xargs -I{} ln -s /all_hostlibs/{} /usr/lib64/{}
 RUN rm /tmp/desired_hostlibs.txt
 
 # some CRAN dependencies
