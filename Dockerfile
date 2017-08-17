@@ -8,14 +8,17 @@ RUN apt-get update      \
     ssh                 \
     libopenblas-dev     \
     libopenmpi-dev      \
-    libibverbs1         \
-    libibcm1            \
-    libibcm-dev         \
-    ibverbs-utils       \
-    libibverbs-dev      \
-    librdmacm-dev       \
-    librdmacm1          \
-    rdmacm-utils
+    mkdir /usr/local/openmpi || echo "Directory exists"  \
+    mkdir /opt/mellanox || echo "Directory exists"  \
+    mkdir /all_hostlibs || echo "Directory exists"  \
+    mkdir /desired_hostlibs || echo "Directory exists"  \
+    mkdir /etc/libibverbs.d || echo "Directory exists"  \
+    echo "driver mlx4" > /etc/libibverbs.d/mlx4.driver  \
+    echo "driver mlx5" > /etc/libibverbs.d/mlx5.driver  \
+    adduser ylk || echo "User exists"  \
+    wget https://gist.githubusercontent.com/l1ll1/89b3f067d5b790ace6e6767be5ea2851/raw/422c8b5446c6479285cd29d1bf5be60f1b359b90/desired_hostlibs.txt -O /tmp/desired_hostlibs.txt   \
+    cat /tmp/desired_hostlibs.txt | xargs -I{} ln -s /all_hostlibs/{} /desired_hostlibs/{}  \
+    rm /tmp/desired_hostlibs.txt
 
 # some CRAN dependencies
 RUN apt-get install -y \
