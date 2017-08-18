@@ -22,7 +22,7 @@ RUN echo "driver mlx5" > /etc/libibverbs.d/mlx5.driver
 RUN echo "driver cxgb3" > /etc/libibverbs.d/cxgb3.driver
 RUN echo "driver cxgb4" > /etc/libibverbs.d/cxgb4.driver
 RUN echo "driver i40iw" > /etc/libibverbs.d/i40iw.driver
-RUN echo "driver ipath" > /etc/libibverbs.d/ipath.driver
+RUN echo "driver ipathverbs" > /etc/libibverbs.d/ipath.driver
 RUN echo "driver mthca" > /etc/libibverbs.d/mthca.driver
 RUN echo "driver nes" > /etc/libibverbs.d/nes.driver
 RUN wget https://gist.githubusercontent.com/YupingLu/08e66ce5923d0fc9a3bf97aad136289f/raw/250a1844bde06e1ddf458af4b50db6dfb46c043d/desired_hostlibs.txt -O /tmp/desired_hostlibs.txt
