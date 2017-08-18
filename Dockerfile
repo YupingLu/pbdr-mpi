@@ -25,7 +25,7 @@ RUN echo "driver i40iw" > /etc/libibverbs.d/i40iw.driver
 RUN echo "driver ipath" > /etc/libibverbs.d/ipath.driver
 RUN echo "driver mthca" > /etc/libibverbs.d/mthca.driver
 RUN echo "driver nes" > /etc/libibverbs.d/nes.driver
-RUN wget https://gist.githubusercontent.com/YupingLu/08e66ce5923d0fc9a3bf97aad136289f/raw/250a1844bde06e1ddf458af4b50db6dfb46c043d/desired_hostlibs.txt -O /tmp/desired_hostlibs.txt
+RUN wget https://gist.githubusercontent.com/YupingLu/cc2b37bf76eb3b7061d5a55105f8f88a/raw/a172c18c2597e750714cb19d4d8e2a1c119fb0d4/lib64.txt -O /tmp/desired_hostlibs.txt
 RUN cat /tmp/desired_hostlibs.txt | xargs -I{} ln -s /all_hostlibs/{} /usr/lib64/{}
 RUN rm /tmp/desired_hostlibs.txt
 
