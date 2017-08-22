@@ -9,6 +9,7 @@ RUN apt-get update      \
     python              \
     ssh                 \
     libopenblas-dev     \
+    libopenmpi-dev  \
     software-properties-common
     
 # Using Host libraries
@@ -28,9 +29,8 @@ RUN wget https://gist.githubusercontent.com/YupingLu/cc2b37bf76eb3b7061d5a55105f
 RUN cat /tmp/desired_hostlibs.txt | xargs -I{} ln -s /all_hostlibs/{} /usr/lib64/{}
 RUN rm /tmp/desired_hostlibs.txt
 
-# some CRAN dependencies
+# Some CRAN dependencies
 RUN apt-get install -y r-cran-curl
-
 RUN r -e "install.packages(c('rlecuyer', 'remotes', 'randomForest'), \
   repos='https://cran.rstudio.com/', dependencies='Imports')"
 
@@ -42,25 +42,23 @@ RUN cd /tmp \
   && rm colorout_1.1-2.tar.gz \
   && rm -rf colorout/
 
-# install latest pbdR packages from github
-RUN r -e "                                      \
-  remotes::install_github('RBigData/pbdMPI')  ; \
-"
+# Install latest pbdR packages from github
+RUN r -e "remotes::install_github('RBigData/pbdMPI');"
 
-# some quality of life stuff
+# Some quality of life stuff
 RUN echo "alias R='R --no-save --quiet'" >> /etc/bash.bashrc
 RUN echo "options(repos=structure(c(CRAN='https://cran.rstudio.com/'))) ; \
   utils::rc.settings(ipck=TRUE);                                          \
   library(colorout);                                                      \
   " > /usr/lib/R/etc/Rprofile.site
 
-# cleanup
+# Cleanup
 RUN rm -rf /tmp/*
 RUN apt-get remove -y --purge python wget
 RUN apt-get autoremove -y
 RUN apt-get autoclean
 
-# create an R user
+# Create an R user
 ENV HOME /home/ylk
 RUN useradd --create-home --home-dir $HOME ylk \
   && chown -R ylk:users $HOME
@@ -68,5 +66,5 @@ RUN useradd --create-home --home-dir $HOME ylk \
 WORKDIR $HOME
 USER ylk
 
-# default command
+# Default command
 CMD ["bash"]
